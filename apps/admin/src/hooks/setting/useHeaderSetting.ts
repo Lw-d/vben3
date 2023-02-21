@@ -15,11 +15,8 @@ export function useHeaderSetting() {
 
   const getShowFullHeaderRef = computed(() => {
     return (
-      !unref(getFullContent) &&
-      unref(getShowMixHeaderRef) &&
-      unref(getShowHeader) &&
-      !unref(getIsTopMenu) &&
-      !unref(getIsMixSidebar)
+      (!unref(getFullContent) &&
+        unref(getShowHeader))
     )
   })
 
@@ -97,7 +94,6 @@ export function useHeaderSetting() {
   }
   return {
     setHeaderSetting,
-
     getShowDoc,
     getShowSearch,
     getHeaderTheme,

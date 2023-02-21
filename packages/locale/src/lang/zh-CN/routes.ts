@@ -1,6 +1,7 @@
 export default {
   basic: {
     login: '登录',
+    lock: '锁屏'
   },
   dashboard: {
     dashboard: '仪表板',
@@ -12,6 +13,9 @@ export default {
     demo: '演示',
     card: '卡片',
     form: '表单',
-    table: '表格',
+    table: {
+      table: '表格',
+      basic: '基础表格',
+    },
   },
 }

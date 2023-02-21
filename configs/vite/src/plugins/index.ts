@@ -13,7 +13,7 @@ import { configSvgIconsPlugin } from './svg-icons'
 import { configUnocssPlugin } from './unocss'
 import { createConfigPlugin } from './config'
 import { configHttpsPlugin } from './https'
-
+import monacoEditorPlugin from 'vite-plugin-monaco-editor'
 export async function configVitePlugins(
   root: string,
   viteEnv: ViteEnv,
@@ -28,10 +28,8 @@ export async function configVitePlugins(
   } = viteEnv
 
   const vitePlugins: (PluginOption | PluginOption[])[] = [
-    // have to
-    vue({
-      reactivityTransform: true,
-    }),
+    // handle .vue files
+    vue(),
     // have to
     vueJsx(),
   ]
@@ -61,6 +59,8 @@ export async function configVitePlugins(
 
   // http2
   vitePlugins.push(configHttpsPlugin(viteEnv))
+  // monacoEditorPlugin
+  vitePlugins.push(monacoEditorPlugin({}))
 
   // The following plugins only work in the production environment
   if (isBuild) {

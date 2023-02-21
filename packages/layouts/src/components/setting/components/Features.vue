@@ -97,13 +97,13 @@ if (!some) {
                 :disabled="!getShowMenuRef || !getCollapsed || getIsMixSidebar"/>
     <SwitchItem :title="t('layout.setting.fixedHeader')" :def="getHeaderFixed"
                 :event="HandlerSettingEnum.HEADER_FIXED"
-                :disabled="getShowHeader"/>
+                :disabled="!getShowHeader"/>
     <SwitchItem :title="t('layout.setting.fixedSideBar')" :def="getMenuFixed"
                 :event="HandlerSettingEnum.MENU_FIXED"
                 :disabled="!getShowMenuRef || getIsMixSidebar"/>
     <SelectItem :title="t('layout.setting.mixSidebarTrigger')" :options="mixSidebarTriggerOptions"
                 :def="getMixSideTrigger" :event="HandlerSettingEnum.MENU_TRIGGER_MIX_SIDEBAR"
-                :disabled="getIsMixSidebar"/>
+                :disabled="!getIsMixSidebar"/>
     <SelectItem :title="t('layout.setting.topMenuLayout')" :options="topMenuAlignOptions"
                 :def="getTopMenuAlign"
                 :event="HandlerSettingEnum.MENU_TOP_ALIGN"

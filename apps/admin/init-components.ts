@@ -90,6 +90,8 @@ import naive, {
   NSkeleton,
   NTooltip,
   NTab,
+  NResult,
+  NAffix, NGradientText
 } from 'naive-ui'
 
 import { initVbenComponent, setNotice, setMessage } from '@vben/vbencomponents'
@@ -181,6 +183,9 @@ export async function registerComponents(app) {
     Element: NElement,
     Skeleton: NSkeleton,
     Tooltip: NTooltip,
+    Result: NResult,
+    Affix: NAffix,
+    GradientText: NGradientText
   })
   setMessage(useMessage)
   setNotice(useNotification)

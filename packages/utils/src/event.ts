@@ -1,4 +1,4 @@
-import { isClient } from './util'
+import { isClient } from '@vueuse/core'
 
 const resizeHandler = (entries: ResizeObserverEntry[]) => {
   for (const entry of entries) {
@@ -35,3 +35,11 @@ export const removeResizeListener = (
     element.__ro__?.disconnect()
   }
 }
+
+export function triggerWindowResize() {
+  const event = document.createEvent('HTMLEvents');
+  event.initEvent('resize', true, true);
+  (event as any).eventType = 'message';
+  window.dispatchEvent(event);
+}
+

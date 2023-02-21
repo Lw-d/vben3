@@ -1,12 +1,7 @@
 <script lang="ts" setup>
 import { ref, h, onMounted, unref, nextTick } from 'vue'
 import { createNamespace, mapTree } from '@vben/utils'
-import { VbenIconify } from '@vben/vbencomponents'
 import { context } from '../../../bridge'
-const { Logo, getMenus, listenerRouteChange, useMenuSetting } = context
-import { MenuTypeEnum } from '@vben/constants'
-const { getMenuType } = useMenuSetting()
-
 import {
   RouteLocationNormalizedLoaded,
   RouterLink,
@@ -14,6 +9,12 @@ import {
 } from 'vue-router'
 import { useI18n } from '@vben/locale'
 import { REDIRECT_NAME } from '@vben/constants'
+import {renderIcon} from "../index";
+const { Logo, getMenus, listenerRouteChange, useMenuSetting, useAppInject } = context
+
+const { getAccordion } = useMenuSetting()
+const { getIsMobile } = useAppInject()
+
 const props = defineProps({
   mode: {
     type: String,
@@ -21,10 +22,9 @@ const props = defineProps({
   },
 })
 const { bem } = createNamespace('layout-menu')
-// const collapsed = ref(false)
 const { t } = useI18n()
 const { currentRoute } = useRouter()
-const { getCollapsed } = useMenuSetting()
+const { getCollapsed, getMenuShowLogo } = useMenuSetting()
 const menuRef = ref(null)
 const menuList = ref([])
 const activeKey = ref()
@@ -82,16 +82,13 @@ const routerToMenu = (item: RouteRecordItem) => {
     icon: renderIcon(icon),
   }
 }
-function renderIcon(icon: string) {
-  return () => h(VbenIconify, { icon })
-}
 </script>
 
 <template>
   <div :class="bem()">
     <logo
       :class="bem('logo')"
-      v-if="getMenuType === MenuTypeEnum.SIDEBAR"
+      v-if="getMenuShowLogo || getIsMobile"
       :showTitle="!getCollapsed"
     />
 
@@ -106,6 +103,7 @@ function renderIcon(icon: string) {
         :root-indent="18"
         ref="menuRef"
         :mode="props.mode"
+        :accordion="getAccordion"
       />
     </VbenScrollbar>
   </div>

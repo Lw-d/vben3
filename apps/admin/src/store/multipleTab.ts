@@ -3,17 +3,15 @@ import type {
   RouteLocationRaw,
   Router,
 } from 'vue-router'
-import { pinia } from '@/pinia'
 import { toRaw, unref } from 'vue'
 import { defineStore } from 'pinia'
-// import { store } from '/@/store';
 
-import { useGo, useRedo, useLocalStorage, RemovableRef } from '@vben/use'
+import { useGo, useRedo } from '@vben/hooks'
 // import { Persistent } from '/@/utils/cache/persistent';
 
 import { PageEnum } from '@vben/constants'
-import { PAGE_NOT_FOUND_ROUTE, REDIRECT_ROUTE } from '@/router/routes/basic'
-import { getRawRoute } from '@vben/utils'
+import { PAGE_NOT_FOUND_ROUTE, REDIRECT_ROUTE } from '@vben/router'
+import { getRawRoute, RemovableRef } from '@vben/utils'
 import { useUserStore } from '@/store/user'
 // import { useRouter, useRoute } from 'vue-router'
 // import { router } from '@/router'
@@ -41,17 +39,20 @@ const getToTarget = (tabItem: RouteLocationNormalized) => {
     query: query || {},
   }
 }
-const TabsStorage = useLocalStorage('MULTIPLE_TABS_KEY', [])
-const cacheTab = true
+// const TabsStorage = useLocalStorage('MULTIPLE_TABS_KEY', [])
+// const cacheTab = true
 // const cacheTab = projectSetting.multiTabsSetting.cache
 
 export const useMultipleTabStore = defineStore({
   id: 'app-multiple-tab',
+  persist: {
+    paths: ['tabList'],
+  },
   state: (): MultipleTabState => ({
     // Tabs that need to be cached
     cacheTabList: new Set(),
     // multiple tab list
-    tabList: cacheTab ? TabsStorage || [] : [],
+    tabList: [],
     // Index of the last moved tab
     lastDragEndIndex: 0,
   }),
@@ -128,11 +129,13 @@ export const useMultipleTabStore = defineStore({
     async checkTab(route: RouteLocationNormalized) {
       // await router.isReady()
 
-      const { path, name } = getRawRoute(route)
+      const { path, name, meta } = getRawRoute(route)
       // 404  The page does not need to add a tab
       if (
-        path === PageEnum.ERROR_PAGE ||
-        path === PageEnum.BASE_LOGIN ||
+        [PageEnum.ERROR_PAGE, PageEnum.BASE_LOGIN, PageEnum.BASE_LOCK].includes(
+          path as PageEnum,
+        ) ||
+        meta?.hideTab ||
         !name ||
         [REDIRECT_ROUTE.name, PAGE_NOT_FOUND_ROUTE.name].includes(
           name as string,
@@ -380,5 +383,5 @@ export const useMultipleTabStore = defineStore({
 
 // Need to be used outside the setup
 export function useMultipleTabWithOut() {
-  return useMultipleTabStore(pinia)
+  return useMultipleTabStore()
 }

@@ -1,6 +1,7 @@
 export default {
   basic: {
     login: 'Login',
+    lock: 'LockScreen'
   },
   dashboard: {
     dashboard: 'Dashboard',
@@ -12,6 +13,9 @@ export default {
     demo: 'Demo',
     card: 'Card',
     form: 'Form',
-    table: 'Table',
+    table: {
+      table: 'table',
+      basic: 'basic',
+    },
   },
 }

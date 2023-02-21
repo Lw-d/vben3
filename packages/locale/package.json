@@ -1,6 +1,6 @@
 {
   "name": "@vben/locale",
-  "version": "3.0.0-alpha.4",
+  "version": "3.0.0-bata.1",
   "main": "index.ts",
   "module": "index.ts",
   "license": "MIT",
@@ -11,8 +11,7 @@
     "@vben/constants": "workspace:*",
     "@vben/types": "workspace:*",
     "@vben/utils": "workspace:*",
-    "@vueuse/core": "^9.5.0",
-    "vue": "3.2.45",
+    "vue": "3.2.47",
     "vue-i18n": "^9.2.2"
   }
 }
